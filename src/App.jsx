@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { AuthProvider, useAuth } from './context/AuthContext';
 import { ProgressProvider } from './context/ProgressContext';
+import LoginPage from './components/LoginPage';
 import Sidebar from './components/Sidebar';
 import Header from './components/Header';
 import Dashboard from './components/Dashboard';
@@ -10,9 +12,28 @@ import AIPlayground from './components/AIPlayground';
 import { Menu } from 'lucide-react';
 import './index.css';
 
-function App() {
+function AppShell() {
+  const { user, loading } = useAuth();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
+  // Loading splash while Supabase checks session
+  if (loading) {
+    return (
+      <div className="login-page">
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}>
+          <div className="login-spinner" style={{ width: 40, height: 40, borderWidth: 3 }} />
+          <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.9rem' }}>Caricamento…</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Not authenticated → show login
+  if (!user) {
+    return <LoginPage />;
+  }
+
+  // Authenticated → show the full app
   return (
     <ProgressProvider>
       <Router>
@@ -52,6 +73,14 @@ function App() {
         </div>
       </Router>
     </ProgressProvider>
+  );
+}
+
+function App() {
+  return (
+    <AuthProvider>
+      <AppShell />
+    </AuthProvider>
   );
 }
 

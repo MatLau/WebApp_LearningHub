@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useProgress } from '../context/ProgressContext';
+import { useAuth } from '../context/AuthContext';
 import { COURSE_AREAS } from '../data/courseData';
 import {
   BookOpen, Users, GraduationCap, FileText, Calculator,
@@ -18,6 +19,8 @@ const ICON_MAP = {
 export default function Dashboard() {
   const navigate = useNavigate();
   const { completedCount, totalXp, isCompleted } = useProgress();
+  const { profile, user } = useAuth();
+  const displayName = profile?.full_name || profile?.username || user?.email?.split('@')[0] || 'Corsista';
   const totalModules = COURSE_AREAS.reduce((s, a) => s + a.modules.length, 0);
 
   return (
@@ -26,10 +29,10 @@ export default function Dashboard() {
       <section className="welcome-section">
         <h1>
           <Sparkles size={28} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '0.5rem' }} />
-          Benvenuto nel Learning Hub
+          Ciao, {displayName}!
         </h1>
         <p>
-          Il tuo percorso di formazione sull'Intelligenza Artificiale per le segreterie scolastiche.
+          Bentornato nel tuo percorso di formazione sull'Intelligenza Artificiale per le segreterie scolastiche.
           Esplora i moduli, completa i quiz e guadagna XP.
         </p>
       </section>

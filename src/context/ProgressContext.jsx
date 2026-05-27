@@ -1,49 +1,85 @@
-import React, { createContext, useContext, useState, useCallback } from 'react';
+import React, { createContext, useContext, useState, useCallback, useEffect } from 'react';
+import { CLOUD_ENABLED, loadProgress as sbLoad, saveProgress as sbSave } from '../lib/supabaseClient';
+import { useAuth } from './AuthContext';
 
 const ProgressContext = createContext();
 
-const STORAGE_KEY = 'learninghub_progress';
+const LOCAL_KEY = 'learninghub_progress';
 
-function loadProgress() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? JSON.parse(raw) : {};
-  } catch {
-    return {};
-  }
+function readLocal() {
+  try { return JSON.parse(localStorage.getItem(LOCAL_KEY) || '{}'); } catch { return {}; }
 }
-
-function saveProgress(data) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+function writeLocal(data) {
+  localStorage.setItem(LOCAL_KEY, JSON.stringify(data));
 }
 
 export function ProgressProvider({ children }) {
-  const [progress, setProgress] = useState(loadProgress);
+  const { user } = useAuth();
+  const [progress, setProgress] = useState({});
+  const [synced, setSynced] = useState(false);
+
+  // Load progress: from Supabase if logged in, otherwise localStorage
+  useEffect(() => {
+    setSynced(false);
+    if (CLOUD_ENABLED && user) {
+      sbLoad(user.id).then((data) => {
+        if (data?.state) {
+          setProgress(data.state);
+        } else {
+          // First time: try to migrate local data
+          const local = readLocal();
+          setProgress(local);
+          if (Object.keys(local).length > 0) {
+            const xp = Object.values(local).reduce((s, e) => s + (e.xp || 0), 0);
+            sbSave(user.id, local, xp);
+          }
+        }
+        setSynced(true);
+      }).catch(() => {
+        setProgress(readLocal());
+        setSynced(true);
+      });
+    } else {
+      setProgress(readLocal());
+      setSynced(true);
+    }
+  }, [user?.id]);
+
+  // Persist to Supabase + localStorage whenever progress changes (after initial load)
+  const persist = useCallback((next) => {
+    writeLocal(next);
+    if (CLOUD_ENABLED && user) {
+      const xp = Object.values(next).reduce((s, e) => s + (e.xp || 0), 0);
+      sbSave(user.id, next, xp);
+    }
+  }, [user?.id]);
 
   const markCompleted = useCallback((moduleId) => {
     setProgress((prev) => {
-      const next = { ...prev, [moduleId]: { completed: true, xp: (prev[moduleId]?.xp || 0) + 10 } };
-      saveProgress(next);
+      const entry = prev[moduleId] || { completed: false, xp: 0 };
+      if (entry.completed) return prev;
+      const next = { ...prev, [moduleId]: { ...entry, completed: true, xp: (entry.xp || 0) + 10 } };
+      persist(next);
       return next;
     });
-  }, []);
+  }, [persist]);
 
   const addXp = useCallback((moduleId, amount) => {
     setProgress((prev) => {
       const entry = prev[moduleId] || { completed: false, xp: 0 };
-      const next = { ...prev, [moduleId]: { ...entry, xp: entry.xp + amount } };
-      saveProgress(next);
+      const next = { ...prev, [moduleId]: { ...entry, xp: (entry.xp || 0) + amount } };
+      persist(next);
       return next;
     });
-  }, []);
+  }, [persist]);
 
   const isCompleted = useCallback((moduleId) => !!progress[moduleId]?.completed, [progress]);
 
-  const totalXp = Object.values(progress).reduce((sum, e) => sum + (e.xp || 0), 0);
+  const totalXp = Object.values(progress).reduce((s, e) => s + (e.xp || 0), 0);
   const completedCount = Object.values(progress).filter((e) => e.completed).length;
 
   return (
-    <ProgressContext.Provider value={{ progress, markCompleted, addXp, isCompleted, totalXp, completedCount }}>
+    <ProgressContext.Provider value={{ progress, markCompleted, addXp, isCompleted, totalXp, completedCount, synced }}>
       {children}
     </ProgressContext.Provider>
   );
