@@ -1,0 +1,114 @@
+import React from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
+import { useProgress } from '../context/ProgressContext';
+import { COURSE_AREAS } from '../data/courseData';
+import {
+  BookOpen, Users, GraduationCap, FileText, Calculator,
+  FolderKanban, Monitor, CalendarClock, FlaskConical,
+  Presentation, DoorOpen, Cpu,
+  LayoutDashboard, BrainCircuit, Sparkles, X
+} from 'lucide-react';
+
+const ICON_MAP = {
+  BookOpen, Users, GraduationCap, FileText, Calculator,
+  FolderKanban, Monitor, CalendarClock, FlaskConical,
+  Presentation, DoorOpen, Cpu,
+};
+
+export default function Sidebar({ isOpen, onClose }) {
+  const { totalXp, completedCount } = useProgress();
+  const totalModules = COURSE_AREAS.reduce((s, a) => s + a.modules.length, 0);
+  const xpPercent = Math.min((totalXp / (totalModules * 20)) * 100, 100);
+  const location = useLocation();
+
+  return (
+    <>
+      {/* Mobile overlay */}
+      {isOpen && <div className="sidebar-overlay" onClick={onClose} aria-hidden="true" />}
+
+      <aside className={`sidebar ${isOpen ? 'open' : ''}`} role="navigation" aria-label="Navigazione principale">
+        {/* Close button mobile */}
+        <button className="sidebar-close-btn mobile-toggle" onClick={onClose} aria-label="Chiudi menu">
+          <X size={20} />
+        </button>
+
+        {/* Logo */}
+        <div className="sidebar-header">
+          <NavLink to="/" className="sidebar-logo" onClick={onClose}>
+            <div className="sidebar-logo-icon">
+              <Sparkles size={22} />
+            </div>
+            <div className="sidebar-logo-text">
+              <h1>Learning Hub IA</h1>
+              <span>Segreterie Scolastiche</span>
+            </div>
+          </NavLink>
+        </div>
+
+        {/* XP Bar */}
+        <div className="xp-bar-container">
+          <div className="xp-label">
+            <span>Livello Progresso</span>
+            <span>{totalXp} XP</span>
+          </div>
+          <div className="xp-bar" role="progressbar" aria-valuenow={totalXp} aria-valuemin={0} aria-valuemax={totalModules * 20}>
+            <div className="xp-bar-fill" style={{ width: `${xpPercent}%` }} />
+          </div>
+        </div>
+
+        {/* Navigation */}
+        <nav className="sidebar-nav">
+          {/* Dashboard link */}
+          <NavLink
+            to="/"
+            end
+            className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
+            onClick={onClose}
+          >
+            <LayoutDashboard size={20} className="nav-item-icon" />
+            Dashboard
+          </NavLink>
+
+          <div className="nav-section-label">Aree del Corso</div>
+
+          {COURSE_AREAS.map((area) => {
+            const Icon = ICON_MAP[area.icon] || BookOpen;
+            const areaCompleted = area.modules.filter(m => {
+              try { return JSON.parse(localStorage.getItem('learninghub_progress') || '{}')[m.id]?.completed; } catch { return false; }
+            }).length;
+            const isAreaActive = location.pathname.startsWith(`/area/${area.id}`);
+
+            return (
+              <NavLink
+                key={area.id}
+                to={`/area/${area.id}`}
+                className={`nav-item ${isAreaActive ? 'active' : ''}`}
+                onClick={onClose}
+              >
+                <Icon size={20} className="nav-item-icon" />
+                {area.label}
+                {areaCompleted > 0 && (
+                  <span className={`nav-item-badge ${areaCompleted === area.modules.length ? 'completed' : ''}`}>
+                    {areaCompleted}/{area.modules.length}
+                  </span>
+                )}
+              </NavLink>
+            );
+          })}
+
+          <div className="nav-section-label">Strumenti</div>
+
+          <NavLink to="/quiz" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`} onClick={onClose}>
+            <BrainCircuit size={20} className="nav-item-icon" />
+            Quiz Interattivi
+          </NavLink>
+
+          <NavLink to="/playground" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`} onClick={onClose}>
+            <FlaskConical size={20} className="nav-item-icon" />
+            Playground AI
+          </NavLink>
+        </nav>
+      </aside>
+    </>
+  );
+}
