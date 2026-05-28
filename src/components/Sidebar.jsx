@@ -43,7 +43,7 @@ export default function Sidebar({ isOpen, onClose }) {
             </div>
             <div className="sidebar-logo-text">
               <h1>Learning Hub IA</h1>
-              <span>Competenze digitali e IA per la scuola</span>
+              <span>Innovazione digitale scolastica</span>
             </div>
           </NavLink>
         </div>

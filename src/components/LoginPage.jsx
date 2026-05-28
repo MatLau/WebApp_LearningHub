@@ -97,7 +97,7 @@ export default function LoginPage() {
             </div>
             <div>
               <div className="login-logo-title">Learning Hub IA</div>
-              <div className="login-logo-sub">Competenze digitali e IA per la scuola</div>
+              <div className="login-logo-sub">Innovazione digitale scolastica</div>
             </div>
           </div>
 
@@ -144,7 +144,7 @@ export default function LoginPage() {
           </div>
           <div>
             <div className="login-logo-title">Learning Hub IA</div>
-            <div className="login-logo-sub">Competenze digitali e IA per la scuola</div>
+            <div className="login-logo-sub">Innovazione digitale scolastica</div>
           </div>
         </div>
 
