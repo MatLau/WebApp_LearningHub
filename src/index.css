@@ -1997,10 +1997,47 @@ h1, h2, h3, h4, h5, h6 {
   transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
-.form-group input:focus {
+.form-group input:focus,
+.form-group select:focus {
   border-color: var(--color-primary);
   box-shadow: 0 0 0 3px var(--color-primary-glow);
 }
+
+.form-group select {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  padding-right: 2.5rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text);
+  font-size: 0.9rem;
+  font-family: var(--font-primary);
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.role-badge {
+  display: inline-block;
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: rgba(100,116,139,0.12);
+  color: var(--color-text-muted);
+}
+.role-badge.ata      { background: rgba(0,113,227,0.12); color: var(--color-primary-light); }
+.role-badge.docente  { background: rgba(36,138,61,0.12); color: var(--color-accent); }
+.role-badge.at       { background: rgba(255,149,0,0.12); color: var(--color-warning); }
+.role-badge.cs       { background: rgba(100,116,139,0.15); color: var(--color-text-secondary); }
+.role-badge.admin    { background: rgba(255,59,48,0.10); color: var(--color-danger); }
 
 .form-group input::placeholder {
   color: var(--color-text-muted);

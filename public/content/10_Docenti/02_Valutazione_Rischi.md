@@ -34,6 +34,29 @@ L'IA **non deve sostituire** l'insegnamento diretto e la relazione educativa. Il
 ## Allucinazioni e affidabilità
 I modelli linguistici producono risposte sicure nel tono ma a volte **errate o con fonti inventate** (allucinazioni). Prima di usare un contenuto in classe, verifica dati, citazioni e riferimenti normativi.
 
+## I sei rischi chiave da gestire (DM 166/2025)
+Le Linee guida identificano sei rischi principali con le relative strategie di mitigazione:
+
+| Rischio | Come si manifesta | Come mitigarlo |
+|---|---|---|
+| **Bias e discriminazioni** | Algoritmi che riproducono stereotipi (es. percorsi STEM solo ai maschi) | Test su campioni diversificati; diritto di contestare gli output |
+| **Allucinazioni** | Output formalmente corretti ma contenutisticamente falsi | Verifica umana qualificata sempre; educare al controllo delle fonti |
+| **Dipendenza tecnologica** | Delega eccessiva che erode le competenze umane | Alternare attività con e senza IA; formare su *quando non usarla* |
+| **Violazione della privacy** | Condivisione di dati con terze parti senza DPA | Contratti conformi al GDPR; minimizzare i dati; no dati nominali degli studenti |
+| **Digital divide** | Esclusione di chi non ha accesso agli strumenti | Garantire alternative equivalenti; non condizionare la valutazione all'IA |
+| **Opacità decisionale** | Impossibilità di spiegare come l'IA è arrivata a un risultato | Documentare le decisioni; prevedere procedure di reclamo nella policy |
+
+## Verso i compiti autentici
+La valutazione tradizionale sul prodotto finito è **inadeguata** nell'era dell'IA: lo stesso prompt distribuito in classe non produce necessariamente gli stessi output.
+
+Occorre passare a **compiti autentici** che osservino il processo:
+- Chiedi allo studente di **documentare il prompt** usato e il percorso seguito
+- Valuta *come* lo studente usa l'IA, non solo il risultato finale
+- Usa l'IA per la valutazione **formativa** (supporto, feedback, esercitazione), non sommativa
+- Prevedi l'uso dichiarato e regolamentato dell'IA, non il divieto assoluto
+
+> **Attenzione normativa:** La valutazione finale deve restare sempre del docente. L'uso dell'IA per ammissioni e orientamento è classificato ad **alto rischio** (AI Act, Allegato III) e non può essere delegato ad algoritmi.
+
 ---
 ### CONTROLLI DA EFFETTUARE SEMPRE (REVISIONE UMANA)
 - [ ] Sto usando l'IA come supporto e non come decisore della valutazione?

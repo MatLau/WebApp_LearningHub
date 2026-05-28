@@ -103,6 +103,7 @@ export const COURSE_AREAS = [
       { id: 'mod_doc2', title: 'Valutazione, rischi e uso responsabile', file: '10_Docenti/02_Valutazione_Rischi.md' },
       { id: 'mod_doc3', title: 'Inclusione, BES e multilingue', file: '10_Docenti/03_Inclusione_BES.md' },
       { id: 'mod_doc4', title: 'Guidare gli studenti all\'uso critico', file: '10_Docenti/04_Studenti_Uso_Critico.md' },
+      { id: 'mod_doc5', title: 'Governance, ruoli e implementazione', file: '10_Docenti/05_Governance_Implementazione.md' },
     ],
   },
   {
@@ -150,6 +151,12 @@ export const QUIZZES = {
     { "question": "Cosa sono le «allucinazioni» dell'IA?", "options": ["Errori di battitura", "Output plausibili ma falsi o con fonti inventate", "Immagini generate", "Virus"], "correct": 1, "explanation": "Vanno sempre verificate: è un'occasione per educare al pensiero critico." },
     { "question": "L'obiettivo nell'uso dell'IA con gli studenti è renderli…", "options": ["utilizzatori passivi", "co-creatori consapevoli e critici", "dipendenti dall'IA", "valutatori automatici"], "correct": 1, "explanation": "L'IA non deve sostituire lo sforzo cognitivo: si promuove un uso critico e responsabile." },
     { "question": "Le scelte sull'uso dell'IA in classe vanno…", "options": ["tenute riservate", "condivise con trasparenza con studenti e famiglie", "decise dall'IA", "imposte senza spiegazioni"], "correct": 1, "explanation": "Trasparenza e coinvolgimento (anche via organi collegiali) creano fiducia." }
+  ],
+  "mod_doc5": [
+    { "question": "Quale nuova figura è stata introdotta dal DM 166/2025 in ogni istituto?", "options": ["Il valutatore algoritmi", "Il Referente IA d'istituto", "Il tecnico di laboratorio digitale", "Il DPO esterno obbligatorio"], "correct": 1, "explanation": "Il DM 166/2025 prevede che il DS nomini un Referente IA d'istituto che coordina le iniziative AI e collabora con DSGA e docenti." },
+    { "question": "Quante fasi prevede il framework operativo del DM 166/2025?", "options": ["3 (Analisi, Adozione, Verifica)", "4 (Analisi, Pianificazione, Monitoraggio, Revisione)", "5 (Analisi, Pianificazione, Adozione, Monitoraggio, Consolidamento)", "2 (Sperimentazione, Consolidamento)"], "correct": 2, "explanation": "Le cinque fasi sono: Analisi preliminare → Pianificazione → Adozione e sperimentazione → Monitoraggio e valutazione → Consolidamento e revisione." },
+    { "question": "La policy IA d'istituto è…", "options": ["Facoltativa, su iniziativa del DS", "Obbligatoria: deliberata dal CdI e inserita nel PTOF", "Riservata al solo personale ATA", "Gestita autonomamente da ogni docente"], "correct": 1, "explanation": "La policy è obbligatoria (non opzionale): va deliberata dal Consiglio di Istituto e inserita nel PTOF, e aggiornata almeno annualmente." },
+    { "question": "Entro quanto tempo dall'avvio di un progetto IA la scuola deve registrarlo sulla Piattaforma Unica MIM?", "options": ["7 giorni", "15 giorni", "30 giorni", "90 giorni"], "correct": 2, "explanation": "Ogni scuola che adotta sistemi IA deve registrare il proprio progetto sulla Piattaforma Unica MIM entro 30 giorni dall'avvio (DM 166/2025)." }
   ],
   "mod_cs1": [
     { "question": "Tra i compiti del collaboratore scolastico rientra…", "options": ["la protocollazione degli atti", "l'accoglienza, la vigilanza e la pulizia dei locali", "la gestione del bilancio", "la valutazione dei docenti"], "correct": 1, "explanation": "Vigilanza su alunni e locali, accoglienza, pulizia e supporto sono i compiti tipici (CCNL, Area dei Collaboratori)." },
@@ -884,6 +891,56 @@ export const FINAL_TEST = [
     "explanation": "Il quadro è plurilivello: AI Act (rischio), GDPR + D.Lgs. 196/2003 (privacy), DPR 445/2000 + L. 241/1990 (documentazione PA), DPR 275/1999 (autonomia), più L. 170/2010 e L. 104/1992 per BES/DSA. Nessuna norma è sufficiente da sola."
   }
 ];
+
+// Sector grouping for the sidebar navigation
+export const SECTORS = [
+  {
+    id: 'comune',
+    label: 'Aree comuni',
+    areaIds: ['intro'],
+  },
+  {
+    id: 'ata',
+    label: 'Assistenti amministrativi',
+    areaIds: ['personale', 'alunni', 'protocollo', 'contabilita', 'progetti', 'piattaforme', 'organizzazione', 'laboratorio'],
+  },
+  {
+    id: 'docenti',
+    label: 'Docenti',
+    areaIds: ['docenti'],
+  },
+  {
+    id: 'collaboratori',
+    label: 'Collaboratori scolastici',
+    areaIds: ['collaboratori'],
+  },
+  {
+    id: 'tecnici',
+    label: 'Assistenti tecnici',
+    areaIds: ['tecnici'],
+  },
+];
+
+// Which sectors each role can access (comune is always included)
+export const ROLE_SECTORS = {
+  ata:     ['comune', 'ata'],
+  docente: ['comune', 'docenti'],
+  at:      ['comune', 'tecnici'],
+  cs:      ['comune', 'collaboratori'],
+};
+
+// Returns the COURSE_AREAS visible to a given profile.
+// Admins and users with no role see everything.
+export function getVisibleAreas(profile) {
+  if (!profile) return COURSE_AREAS;
+  if (profile.is_admin || profile.role === 'admin') return COURSE_AREAS;
+  const allowedSectors = ROLE_SECTORS[profile.role];
+  if (!allowedSectors) return COURSE_AREAS; // no role set → show all (legacy users)
+  const visibleIds = new Set(
+    SECTORS.filter(s => allowedSectors.includes(s.id)).flatMap(s => s.areaIds)
+  );
+  return COURSE_AREAS.filter(a => visibleIds.has(a.id));
+}
 
 // Prompt library with normative bases (category + target role)
 export const PROMPT_TEMPLATES = [

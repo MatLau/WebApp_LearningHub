@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useProgress } from '../context/ProgressContext';
-import { COURSE_AREAS } from '../data/courseData';
+import { SECTORS, getVisibleAreas } from '../data/courseData';
 import { useAuth } from '../context/AuthContext';
 import {
   BookOpen, Users, GraduationCap, FileText, Calculator,
@@ -18,8 +18,9 @@ const ICON_MAP = {
 
 export default function Sidebar({ isOpen, onClose }) {
   const { profile } = useAuth();
-  const { totalXp, completedCount, isCompleted } = useProgress();
-  const totalModules = COURSE_AREAS.reduce((s, a) => s + a.modules.length, 0);
+  const { totalXp, isCompleted } = useProgress();
+  const visibleAreas = getVisibleAreas(profile);
+  const totalModules = visibleAreas.reduce((s, a) => s + a.modules.length, 0);
   const xpPercent = Math.min((totalXp / (totalModules * 20)) * 100, 100);
   const location = useLocation();
 
@@ -71,28 +72,34 @@ export default function Sidebar({ isOpen, onClose }) {
             Dashboard
           </NavLink>
 
-          <div className="nav-section-label">Aree del Corso</div>
-
-          {COURSE_AREAS.map((area) => {
-            const Icon = ICON_MAP[area.icon] || BookOpen;
-            const areaCompleted = area.modules.filter(m => isCompleted(m.id)).length;
-            const isAreaActive = location.pathname.startsWith(`/area/${area.id}`);
-
+          {SECTORS.map((sector) => {
+            const sectorAreas = visibleAreas.filter(a => sector.areaIds.includes(a.id));
+            if (sectorAreas.length === 0) return null;
             return (
-              <NavLink
-                key={area.id}
-                to={`/area/${area.id}`}
-                className={`nav-item ${isAreaActive ? 'active' : ''}`}
-                onClick={onClose}
-              >
-                <Icon size={20} className="nav-item-icon" />
-                {area.label}
-                {areaCompleted > 0 && (
-                  <span className={`nav-item-badge ${areaCompleted === area.modules.length ? 'completed' : ''}`}>
-                    {areaCompleted}/{area.modules.length}
-                  </span>
-                )}
-              </NavLink>
+              <React.Fragment key={sector.id}>
+                <div className="nav-section-label">{sector.label}</div>
+                {sectorAreas.map((area) => {
+                  const Icon = ICON_MAP[area.icon] || BookOpen;
+                  const areaCompleted = area.modules.filter(m => isCompleted(m.id)).length;
+                  const isAreaActive = location.pathname.startsWith(`/area/${area.id}`);
+                  return (
+                    <NavLink
+                      key={area.id}
+                      to={`/area/${area.id}`}
+                      className={`nav-item ${isAreaActive ? 'active' : ''}`}
+                      onClick={onClose}
+                    >
+                      <Icon size={20} className="nav-item-icon" />
+                      {area.label}
+                      {areaCompleted > 0 && (
+                        <span className={`nav-item-badge ${areaCompleted === area.modules.length ? 'completed' : ''}`}>
+                          {areaCompleted}/{area.modules.length}
+                        </span>
+                      )}
+                    </NavLink>
+                  );
+                })}
+              </React.Fragment>
             );
           })}
 

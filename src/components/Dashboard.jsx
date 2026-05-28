@@ -1,8 +1,7 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useProgress } from '../context/ProgressContext';
 import { useAuth } from '../context/AuthContext';
-import { COURSE_AREAS } from '../data/courseData';
+import { getVisibleAreas } from '../data/courseData';
 import {
   BookOpen, Users, GraduationCap, FileText, Calculator,
   FolderKanban, Monitor, CalendarClock, FlaskConical,
@@ -21,7 +20,8 @@ export default function Dashboard() {
   const { completedCount, totalXp, isCompleted } = useProgress();
   const { profile, user } = useAuth();
   const displayName = profile?.full_name || profile?.username || user?.email?.split('@')[0] || 'Corsista';
-  const totalModules = COURSE_AREAS.reduce((s, a) => s + a.modules.length, 0);
+  const visibleAreas = getVisibleAreas(profile);
+  const totalModules = visibleAreas.reduce((s, a) => s + a.modules.length, 0);
 
   return (
     <div className="content-area">
@@ -52,7 +52,7 @@ export default function Dashboard() {
           <div className="stat-label">Punti XP</div>
         </div>
         <div className="stat-card">
-          <div className="stat-value">{COURSE_AREAS.length}</div>
+          <div className="stat-value">{visibleAreas.length}</div>
           <div className="stat-label">Aree tematiche</div>
         </div>
       </div>
@@ -64,7 +64,7 @@ export default function Dashboard() {
       </div>
 
       <div className="module-grid">
-        {COURSE_AREAS.map((area) => {
+        {visibleAreas.map((area) => {
           const Icon = ICON_MAP[area.icon] || BookOpen;
           const areaCompleted = area.modules.filter((m) => isCompleted(m.id)).length;
           const allDone = areaCompleted === area.modules.length;

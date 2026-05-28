@@ -9,6 +9,14 @@ import {
 } from 'lucide-react';
 import { COURSE_AREAS } from '../data/courseData';
 
+const ROLE_LABELS = {
+  ata:     'Assistente Amm.',
+  docente: 'Docente',
+  at:      'Assistente Tecnico',
+  cs:      'Collaboratore Scol.',
+  admin:   'Amministratore',
+};
+
 // Un client separato per non sovrascrivere la sessione dell'admin quando crea nuovi utenti
 const url = import.meta.env.VITE_SUPABASE_URL;
 const anon = import.meta.env.VITE_SUPABASE_ANON_KEY;
@@ -27,6 +35,7 @@ export default function AdminPage() {
   const [newUsername, setNewUsername] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [newFullName, setNewFullName] = useState('');
+  const [newRole, setNewRole] = useState('ata');
   const [createLoading, setCreateLoading] = useState(false);
   const [createError, setCreateError] = useState('');
 
@@ -100,6 +109,7 @@ export default function AdminPage() {
           data: {
             username: newUsername.trim().toLowerCase(),
             full_name: newFullName.trim(),
+            role: newRole,
           },
         },
       });
@@ -109,11 +119,23 @@ export default function AdminPage() {
         throw new Error('Username già esistente.');
       }
 
+      // Upsert profile with role (the DB trigger may not have fired yet)
+      if (data.user?.id) {
+        await supabase.from('profiles').upsert({
+          id: data.user.id,
+          username: newUsername.trim().toLowerCase(),
+          full_name: newFullName.trim(),
+          role: newRole,
+          is_admin: newRole === 'admin',
+        }, { onConflict: 'id' });
+      }
+
       // Successo
       setIsModalOpen(false);
       setNewUsername('');
       setNewPassword('');
       setNewFullName('');
+      setNewRole('ata');
       // Ricarica la lista per vedere il nuovo utente (potrebbe volerci un attimo per il trigger)
       setTimeout(fetchUsers, 1000);
     } catch (err) {
@@ -124,10 +146,11 @@ export default function AdminPage() {
   };
 
   const downloadCSV = () => {
-    const headers = ['Username', 'Nome Completo', 'XP', 'Moduli Completati', 'Totale Moduli', 'Ultimo Accesso'];
+    const headers = ['Username', 'Nome Completo', 'Ruolo', 'XP', 'Moduli Completati', 'Totale Moduli', 'Ultimo Accesso'];
     const rows = users.map(u => [
       u.username,
       u.full_name || '',
+      ROLE_LABELS[u.role] || '-',
       u.xp,
       u.completedCount,
       totalModules,
@@ -191,6 +214,7 @@ export default function AdminPage() {
               <tr>
                 <th>Utente</th>
                 <th>Nome Completo</th>
+                <th>Ruolo</th>
                 <th>Progresso</th>
                 <th>XP</th>
                 <th>Ultimo Accesso</th>
@@ -202,6 +226,11 @@ export default function AdminPage() {
                 <tr key={u.id}>
                   <td><strong>{u.username}</strong></td>
                   <td>{u.full_name || '-'}</td>
+                  <td>
+                    {u.role ? (
+                      <span className={`role-badge ${u.role}`}>{ROLE_LABELS[u.role]}</span>
+                    ) : '-'}
+                  </td>
                   <td>
                     <div className="progress-cell">
                       <span>{u.completedCount} / {totalModules}</span>
@@ -225,7 +254,7 @@ export default function AdminPage() {
                 </tr>
               ))}
               {users.length === 0 && (
-                <tr><td colSpan="6" style={{textAlign: 'center', padding: '2rem'}}>Nessun utente trovato.</td></tr>
+                <tr><td colSpan="7" style={{textAlign: 'center', padding: '2rem'}}>Nessun utente trovato.</td></tr>
               )}
             </tbody>
           </table>
@@ -236,7 +265,7 @@ export default function AdminPage() {
       {isModalOpen && (
         <div className="modal-overlay" onClick={e => e.target === e.currentTarget && setIsModalOpen(false)}>
           <div className="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-            <button className="modal-close" aria-label="Chiudi" onClick={() => setIsModalOpen(false)}>
+            <button className="modal-close" aria-label="Chiudi" onClick={() => { setIsModalOpen(false); setNewRole('ata'); setCreateError(''); }}>
               <X size={24} />
             </button>
             <h2 id="modal-title">Crea Nuovo Utente</h2>
@@ -261,13 +290,23 @@ export default function AdminPage() {
                 />
               </div>
               <div className="form-group">
+                <label>Ruolo</label>
+                <select value={newRole} onChange={e => setNewRole(e.target.value)}>
+                  <option value="ata">Assistente Amministrativo</option>
+                  <option value="docente">Docente</option>
+                  <option value="at">Assistente Tecnico</option>
+                  <option value="cs">Collaboratore Scolastico</option>
+                  <option value="admin">Amministratore</option>
+                </select>
+              </div>
+              <div className="form-group">
                 <label>Password</label>
-                <input 
-                  type="password" 
-                  value={newPassword} 
+                <input
+                  type="password"
+                  value={newPassword}
                   onChange={e => setNewPassword(e.target.value)}
                   placeholder="Minimo 6 caratteri"
-                  required 
+                  required
                   minLength={6}
                 />
               </div>

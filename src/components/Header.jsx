@@ -2,14 +2,14 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useProgress } from '../context/ProgressContext';
 import { useAuth } from '../context/AuthContext';
-import { COURSE_AREAS } from '../data/courseData';
+import { getVisibleAreas } from '../data/courseData';
 import { Search, Trophy, Menu, ChevronRight, LogOut, User } from 'lucide-react';
 
 export default function Header({ onMenuToggle }) {
   const { totalXp, completedCount } = useProgress();
   const { profile, user, logout } = useAuth();
   const location = useLocation();
-  const totalModules = COURSE_AREAS.reduce((s, a) => s + a.modules.length, 0);
+  const totalModules = getVisibleAreas(profile).reduce((s, a) => s + a.modules.length, 0);
   const [showUserMenu, setShowUserMenu] = useState(false);
   const menuRef = useRef(null);
 
@@ -31,7 +31,7 @@ export default function Header({ onMenuToggle }) {
     const parts = location.pathname.split('/').filter(Boolean);
     if (parts.length === 0) return [{ label: 'Dashboard' }];
     if (parts[0] === 'area' && parts[1]) {
-      const area = COURSE_AREAS.find((a) => a.id === parts[1]);
+      const area = getVisibleAreas(profile).find((a) => a.id === parts[1]);
       if (area) {
         const crumbs = [{ label: 'Corso' }, { label: area.label }];
         if (parts[2]) {
