@@ -626,10 +626,7 @@ h1, h2, h3, h4, h5, h6 {
 .md-content h1 {
   font-size: 1.8rem;
   margin-bottom: 0.5rem;
-  background: linear-gradient(135deg, var(--color-primary-light), var(--color-accent));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--color-text);
 }
 
 .md-content h2 {
@@ -742,6 +739,27 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ── Quiz Component ────────────────────────────────────────────────────── */
+.quiz-result-badge {
+  display: inline-block;
+  font-size: 1.1rem;
+  font-weight: 700;
+  padding: 0.4rem 1.25rem;
+  border-radius: 100px;
+  margin-bottom: 1rem;
+}
+
+.quiz-result-badge.passed {
+  background: rgba(34, 197, 94, 0.15);
+  color: oklch(0.72 0.18 145);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.quiz-result-badge.failed {
+  background: rgba(239, 68, 68, 0.12);
+  color: var(--color-danger);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+}
+
 .quiz-container {
   max-width: 700px;
   margin: 0 auto;
@@ -1414,6 +1432,95 @@ h1, h2, h3, h4, h5, h6 {
 /* Adjust h2 margin in slide context (no extra top margin needed) */
 .slide-card .md-content h2 {
   margin-top: 0;
+}
+
+/* ── Inline module quiz ────────────────────────────────────────────── */
+.module-quiz-card {
+  justify-content: center;
+  overflow-y: auto;
+}
+
+.module-quiz-result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.75rem;
+  padding: 1rem 0;
+}
+
+.module-quiz-result h2 {
+  font-size: 1.4rem;
+  margin: 0;
+}
+
+.quiz-result-icon.passed { color: oklch(0.72 0.18 145); }
+.quiz-result-icon.failed { color: var(--color-danger); }
+
+.module-quiz-question {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* ── Slide Shell — full-viewport layout, no page scroll ───────────── */
+.slide-shell {
+  display: flex;
+  flex-direction: column;
+  height: calc(100dvh - var(--header-height));
+  padding: 1.25rem 2rem 1rem;
+  max-width: 900px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.slide-shell .slide-topbar {
+  flex-shrink: 0;
+  margin-bottom: 0.75rem;
+}
+
+.slide-shell .slide-viewport {
+  flex: 1;
+  min-height: 0;
+  margin-bottom: 0.5rem;
+}
+
+.slide-shell .slide-card {
+  height: 100%;
+  min-height: unset;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(99, 102, 241, 0.25) transparent;
+}
+
+.slide-shell .slide-card::-webkit-scrollbar {
+  width: 4px;
+}
+
+.slide-shell .slide-card::-webkit-scrollbar-thumb {
+  background: rgba(99, 102, 241, 0.25);
+  border-radius: 100px;
+}
+
+.slide-shell .slide-dots {
+  flex-shrink: 0;
+  margin-bottom: 0.5rem;
+}
+
+.slide-shell .slide-bottom-actions {
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .slide-shell {
+    padding: 0.75rem 1rem 0.75rem;
+  }
+
+  .slide-shell .slide-card {
+    max-height: unset;
+  }
 }
 
 /* ── Login Page ─────────────────────────────────────────────────────────── */

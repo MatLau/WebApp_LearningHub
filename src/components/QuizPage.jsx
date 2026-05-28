@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { QUIZZES, COURSE_AREAS } from '../data/courseData';
+import { QUIZZES, COURSE_AREAS, QUIZ_PASS_THRESHOLD } from '../data/courseData';
 import { useProgress } from '../context/ProgressContext';
 import { BrainCircuit, CheckCircle2, XCircle, RotateCcw, Trophy, ChevronRight } from 'lucide-react';
 
 export default function QuizPage() {
-  const { addXp } = useProgress();
+  const { addXp, markQuizPassed } = useProgress();
   const [selectedQuiz, setSelectedQuiz] = useState(null);
   const [currentQ, setCurrentQ] = useState(0);
   const [selected, setSelected] = useState(null);
@@ -57,15 +57,31 @@ export default function QuizPage() {
 
   // Finished screen
   if (finished) {
+    const percent = score / questions.length;
+    const passed = percent >= QUIZ_PASS_THRESHOLD;
+    if (passed) markQuizPassed(selectedQuiz);
+    const pct = Math.round(percent * 100);
+
     return (
       <div className="content-area">
         <div className="quiz-container">
           <div className="glass-card" style={{ textAlign: 'center', padding: '3rem 2rem' }}>
-            <Trophy size={48} style={{ color: 'var(--color-accent)', marginBottom: '1rem' }} />
-            <h2 style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>Quiz Completato!</h2>
+            {passed ? (
+              <Trophy size={48} style={{ color: 'var(--color-accent)', marginBottom: '1rem' }} />
+            ) : (
+              <XCircle size={48} style={{ color: 'var(--color-danger)', marginBottom: '1rem' }} />
+            )}
+            <h2 style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>
+              {passed ? 'Quiz Superato!' : 'Non Superato'}
+            </h2>
+            <div className={`quiz-result-badge ${passed ? 'passed' : 'failed'}`}>
+              {pct}% — {score}/{questions.length} corrette
+            </div>
             <p style={{ color: 'var(--color-text-secondary)', marginBottom: '1.5rem' }}>
-              Hai risposto correttamente a <strong>{score}</strong> su <strong>{questions.length}</strong> domande.
-              <br />Hai guadagnato <strong style={{ color: 'var(--color-accent-light)' }}>{score * 5} XP</strong>!
+              {passed
+                ? <>Hai guadagnato <strong style={{ color: 'var(--color-accent-light)' }}>{score * 5} XP</strong>. Ottimo lavoro!</>
+                : <>Punteggio minimo richiesto: <strong>{Math.round(QUIZ_PASS_THRESHOLD * 100)}%</strong>. Riprova per superare il quiz.</>
+              }
             </p>
             <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
               <button className="btn btn-primary" onClick={() => { setCurrentQ(0); setScore(0); setFinished(false); setSelected(null); setShowResult(false); }}>

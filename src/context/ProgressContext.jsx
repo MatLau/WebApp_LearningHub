@@ -75,11 +75,23 @@ export function ProgressProvider({ children }) {
 
   const isCompleted = useCallback((moduleId) => !!progress[moduleId]?.completed, [progress]);
 
+  const markQuizPassed = useCallback((moduleId) => {
+    setProgress((prev) => {
+      if (prev[moduleId]?.quizPassed) return prev;
+      const entry = prev[moduleId] || { completed: false, xp: 0 };
+      const next = { ...prev, [moduleId]: { ...entry, quizPassed: true } };
+      persist(next);
+      return next;
+    });
+  }, [persist]);
+
+  const isQuizPassed = useCallback((moduleId) => !!progress[moduleId]?.quizPassed, [progress]);
+
   const totalXp = Object.values(progress).reduce((s, e) => s + (e.xp || 0), 0);
   const completedCount = Object.values(progress).filter((e) => e.completed).length;
 
   return (
-    <ProgressContext.Provider value={{ progress, markCompleted, addXp, isCompleted, totalXp, completedCount, synced }}>
+    <ProgressContext.Provider value={{ progress, markCompleted, addXp, isCompleted, markQuizPassed, isQuizPassed, totalXp, completedCount, synced }}>
       {children}
     </ProgressContext.Provider>
   );

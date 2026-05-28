@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { supabase, CLOUD_ENABLED, usernameToEmail } from '../lib/supabaseClient';
 import { createClient } from '@supabase/supabase-js';
 import {
-  ShieldAlert, Download, Award, UserPlus, Users,
-  CheckCircle, Loader2, X, Plus
+  ShieldAlert, Download, Award, UserPlus,
+  Loader2, X
 } from 'lucide-react';
-import { COURSE_AREAS } from '../data/courseData';
+import { QUIZZES, getVisibleAreas, QUIZ_PASS_THRESHOLD } from '../data/courseData';
 
 const ROLE_LABELS = {
   ata:     'Assistente Amm.',
@@ -42,8 +42,6 @@ export default function AdminPage() {
   // Certificato State
   const [certificateUser, setCertificateUser] = useState(null);
 
-  const totalModules = COURSE_AREAS.reduce((s, a) => s + a.modules.length, 0);
-
   useEffect(() => {
     if (profile?.is_admin) {
       fetchUsers();
@@ -68,13 +66,26 @@ export default function AdminPage() {
       const merged = profilesData.map(p => {
         const prog = progressData.find(up => up.user_id === p.id);
         const state = prog?.state || {};
-        const completedCount = Object.values(state).filter(s => s?.completed).length;
+
+        // Role-filtered modules and quizzes
+        const visibleAreas = getVisibleAreas(p);
+        const visibleModuleIds = new Set(visibleAreas.flatMap(a => a.modules.map(m => m.id)));
+        const visibleModuleCount = visibleModuleIds.size;
+        const relevantQuizIds = Object.keys(QUIZZES).filter(id => visibleModuleIds.has(id));
+        const allQuizzesPassed = relevantQuizIds.length === 0 ||
+          relevantQuizIds.every(id => state[id]?.quizPassed === true);
+        const visibleCompleted = [...visibleModuleIds].filter(id => state[id]?.completed).length;
+
         return {
           ...p,
           xp: prog?.xp || 0,
-          completedCount,
-          isCompletedAll: completedCount >= totalModules,
-          progressPercent: Math.min((completedCount / totalModules) * 100, 100),
+          completedCount: visibleCompleted,
+          totalModules: visibleModuleCount,
+          allQuizzesPassed,
+          isCompletedAll: visibleCompleted >= visibleModuleCount && allQuizzesPassed,
+          progressPercent: visibleModuleCount > 0
+            ? Math.min((visibleCompleted / visibleModuleCount) * 100, 100)
+            : 0,
           last_active: prog?.updated_at || p.created_at
         };
       });
@@ -153,7 +164,7 @@ export default function AdminPage() {
       ROLE_LABELS[u.role] || '-',
       u.xp,
       u.completedCount,
-      totalModules,
+      u.totalModules,
       new Date(u.last_active).toLocaleString()
     ]);
 
@@ -233,7 +244,7 @@ export default function AdminPage() {
                   </td>
                   <td>
                     <div className="progress-cell">
-                      <span>{u.completedCount} / {totalModules}</span>
+                      <span>{u.completedCount} / {u.totalModules}</span>
                       <div className="mini-progress-bar">
                         <div className="mini-progress-fill" style={{ width: `${u.progressPercent}%` }} />
                       </div>
@@ -242,11 +253,17 @@ export default function AdminPage() {
                   <td><span className="xp-badge">{u.xp} XP</span></td>
                   <td className="date-cell">{new Date(u.last_active).toLocaleDateString()}</td>
                   <td>
-                    <button 
-                      className="btn btn-ghost btn-sm" 
+                    <button
+                      className="btn btn-ghost btn-sm"
                       onClick={() => openCertificate(u)}
                       disabled={!u.isCompletedAll}
-                      title={u.isCompletedAll ? "Genera Attestato" : "Il corso non è ancora completo"}
+                      title={
+                        u.isCompletedAll
+                          ? "Genera Attestato"
+                          : !u.allQuizzesPassed
+                          ? `Quiz non superati (soglia ${Math.round(QUIZ_PASS_THRESHOLD * 100)}%)`
+                          : "Moduli non ancora completati"
+                      }
                     >
                       <Award size={18} className={u.isCompletedAll ? 'text-warning' : 'text-muted'} />
                     </button>
@@ -333,7 +350,7 @@ export default function AdminPage() {
                 <h2>{certificateUser.full_name || certificateUser.username}</h2>
                 <p>ha completato con successo il percorso formativo</p>
                 <h3>"Learning Hub IA: Formazione Segreterie Scolastiche"</h3>
-                <p className="cert-stats">Completando tutti i {totalModules} moduli e ottenendo {certificateUser.xp} XP.</p>
+                <p className="cert-stats">Completando tutti i {certificateUser.totalModules} moduli e ottenendo {certificateUser.xp} XP.</p>
               </div>
               <div className="cert-footer">
                 <div>
