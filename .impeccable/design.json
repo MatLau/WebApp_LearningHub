@@ -1,0 +1,315 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-05-28T00:00:00Z",
+  "title": "Design System: Learning Hub IA",
+  "extensions": {
+    "colorMeta": {
+      "primary": {
+        "role": "primary",
+        "displayName": "Blu Formazione",
+        "canonical": "oklch(54% 0.22 254)",
+        "tonalRamp": [
+          "oklch(15% 0.07 254)",
+          "oklch(25% 0.11 254)",
+          "oklch(35% 0.15 254)",
+          "oklch(45% 0.19 254)",
+          "oklch(54% 0.22 254)",
+          "oklch(63% 0.20 254)",
+          "oklch(72% 0.16 254)",
+          "oklch(85% 0.09 254)"
+        ]
+      },
+      "primary-light": {
+        "role": "primary",
+        "displayName": "Blu Formazione Chiaro",
+        "canonical": "oklch(70% 0.17 252)",
+        "tonalRamp": [
+          "oklch(20% 0.07 252)",
+          "oklch(32% 0.10 252)",
+          "oklch(44% 0.14 252)",
+          "oklch(54% 0.17 252)",
+          "oklch(63% 0.17 252)",
+          "oklch(70% 0.17 252)",
+          "oklch(80% 0.12 252)",
+          "oklch(91% 0.06 252)"
+        ]
+      },
+      "accent": {
+        "role": "secondary",
+        "displayName": "Verde Accreditamento",
+        "canonical": "oklch(51% 0.13 148)",
+        "tonalRamp": [
+          "oklch(15% 0.04 148)",
+          "oklch(25% 0.07 148)",
+          "oklch(35% 0.09 148)",
+          "oklch(43% 0.11 148)",
+          "oklch(51% 0.13 148)",
+          "oklch(62% 0.15 148)",
+          "oklch(73% 0.15 148)",
+          "oklch(87% 0.07 148)"
+        ]
+      },
+      "accent-dark-mode": {
+        "role": "secondary",
+        "displayName": "Verde Accreditamento (Dark)",
+        "canonical": "oklch(74% 0.18 149)",
+        "tonalRamp": [
+          "oklch(18% 0.05 149)",
+          "oklch(30% 0.08 149)",
+          "oklch(42% 0.12 149)",
+          "oklch(55% 0.15 149)",
+          "oklch(65% 0.17 149)",
+          "oklch(74% 0.18 149)",
+          "oklch(83% 0.14 149)",
+          "oklch(92% 0.07 149)"
+        ]
+      },
+      "bg-light": {
+        "role": "neutral",
+        "displayName": "Grigio Carta Velata",
+        "canonical": "oklch(93% 0.007 247)",
+        "tonalRamp": [
+          "oklch(17% 0.01 247)",
+          "oklch(30% 0.01 247)",
+          "oklch(43% 0.01 247)",
+          "oklch(53% 0.01 247)",
+          "oklch(64% 0.01 247)",
+          "oklch(75% 0.01 247)",
+          "oklch(85% 0.008 247)",
+          "oklch(93% 0.007 247)"
+        ]
+      },
+      "text-primary": {
+        "role": "neutral",
+        "displayName": "Ardesia Testo",
+        "canonical": "oklch(16% 0.03 265)",
+        "tonalRamp": [
+          "oklch(16% 0.03 265)",
+          "oklch(25% 0.03 265)",
+          "oklch(35% 0.02 260)",
+          "oklch(45% 0.02 258)",
+          "oklch(53% 0.02 252)",
+          "oklch(65% 0.015 250)",
+          "oklch(78% 0.01 248)",
+          "oklch(92% 0.006 247)"
+        ]
+      },
+      "warning": {
+        "role": "tertiary",
+        "displayName": "Arancione Scadenza",
+        "canonical": "oklch(74% 0.18 65)",
+        "tonalRamp": [
+          "oklch(20% 0.06 65)",
+          "oklch(33% 0.10 65)",
+          "oklch(46% 0.14 65)",
+          "oklch(58% 0.17 65)",
+          "oklch(68% 0.18 65)",
+          "oklch(74% 0.18 65)",
+          "oklch(84% 0.13 65)",
+          "oklch(93% 0.06 65)"
+        ]
+      },
+      "danger": {
+        "role": "tertiary",
+        "displayName": "Rosso Errore",
+        "canonical": "oklch(58% 0.24 27)",
+        "tonalRamp": [
+          "oklch(18% 0.08 27)",
+          "oklch(28% 0.12 27)",
+          "oklch(38% 0.17 27)",
+          "oklch(48% 0.21 27)",
+          "oklch(58% 0.24 27)",
+          "oklch(68% 0.22 27)",
+          "oklch(78% 0.16 27)",
+          "oklch(90% 0.08 27)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Welcome headings and major dashboard titles. One per view. Outfit at 800 weight."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Quiz headings, area titles. Outfit 700."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Section titles with dividers. Smallest Outfit size."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Markdown content and card descriptions. Inter 400, line-height 1.7. Max ~75ch line length."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Status badges, category caps, XP bar metadata. Inter 700, uppercase, wide tracking."
+      }
+    },
+    "shadows": [
+      {
+        "name": "ambient",
+        "value": "0 4px 12px rgba(0,0,0,0.05)",
+        "purpose": "Resting state for cards and the sidebar. Signals containment, not height."
+      },
+      {
+        "name": "hover",
+        "value": "0 12px 32px rgba(0,0,0,0.10)",
+        "purpose": "Hovered and active card states. Signals the component has responded."
+      },
+      {
+        "name": "float",
+        "value": "0 24px 64px rgba(0,0,0,0.15)",
+        "purpose": "Login card, user dropdown, overlays. Highest layer in the system."
+      },
+      {
+        "name": "glow",
+        "value": "0 0 40px rgba(0,113,227,0.25)",
+        "purpose": "Primary-color luminance halo for XP bar fill and primary button. Not a containment shadow."
+      }
+    ],
+    "motion": [
+      {
+        "name": "transition-fast",
+        "value": "200ms cubic-bezier(0.25, 1, 0.5, 1)",
+        "purpose": "Hover state changes, button interactions, nav item color shifts."
+      },
+      {
+        "name": "transition-normal",
+        "value": "400ms cubic-bezier(0.25, 1, 0.5, 1)",
+        "purpose": "Card shadow elevation, sidebar glass state changes."
+      },
+      {
+        "name": "transition-slow",
+        "value": "600ms cubic-bezier(0.25, 1, 0.5, 1)",
+        "purpose": "XP bar fill width animation, module progress bar fill."
+      }
+    ],
+    "breakpoints": [
+      { "name": "mobile", "value": "480px" },
+      { "name": "tablet", "value": "768px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The single primary action on any given screen. Solid, no glass.",
+      "html": "<button class=\"ds-btn-primary\">Avanti al modulo</button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; gap: 8px; padding: 10px 24px; background: linear-gradient(135deg, #0071E3, #0058B0); color: #ffffff; font-family: Inter, -apple-system, sans-serif; font-size: 0.85rem; font-weight: 600; border: none; border-radius: 16px; cursor: pointer; box-shadow: 0 4px 16px rgba(0,113,227,0.25); transition: box-shadow 200ms cubic-bezier(0.25,1,0.5,1), transform 200ms cubic-bezier(0.25,1,0.5,1); } .ds-btn-primary:hover { box-shadow: 0 6px 24px rgba(99,102,241,0.35); } .ds-btn-primary:focus-visible { outline: 2px solid #0071E3; outline-offset: 3px; } .ds-btn-primary:active { transform: scale(0.97); }"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Secondary and tertiary actions. Transparent with border.",
+      "html": "<button class=\"ds-btn-ghost\">Annulla</button>",
+      "css": ".ds-btn-ghost { display: inline-flex; align-items: center; gap: 8px; padding: 10px 24px; background: transparent; color: #334155; font-family: Inter, -apple-system, sans-serif; font-size: 0.85rem; font-weight: 600; border: 1px solid rgba(255,255,255,0.5); border-radius: 16px; cursor: pointer; transition: background 200ms cubic-bezier(0.25,1,0.5,1), color 200ms cubic-bezier(0.25,1,0.5,1), border-color 200ms cubic-bezier(0.25,1,0.5,1); } .ds-btn-ghost:hover { background: rgba(255,255,255,0.6); color: #0F172A; border-color: rgba(255,255,255,0.8); } .ds-btn-ghost:focus-visible { outline: 2px solid #0071E3; outline-offset: 3px; } .ds-btn-ghost:active { transform: scale(0.97); }"
+    },
+    {
+      "name": "Module Card",
+      "kind": "card",
+      "refersTo": "button-primary",
+      "description": "Dashboard unit for each training module. Glass surface, category-tinted icon, progress bar, status badge.",
+      "html": "<div class=\"ds-module-card\"><div class=\"ds-module-icon ds-icon-intro\"><svg width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 20h9\"/><path d=\"M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z\"/></svg></div><h3 class=\"ds-module-title\">Introduzione all'IA</h3><p class=\"ds-module-desc\">Concetti fondamentali, normativa GDPR e AI Act per il personale scolastico.</p><div class=\"ds-module-footer\"><div class=\"ds-module-progress\"><div class=\"ds-module-bar\"><div class=\"ds-module-fill\" style=\"width:60%\"></div></div><span class=\"ds-module-pct\">3 / 5 slide</span></div><span class=\"ds-status-badge ds-status-progress\">In corso</span></div></div>",
+      "css": ".ds-module-card { position: relative; background: rgba(255,255,255,0.25); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); border: 1px solid rgba(255,255,255,0.5); border-radius: 24px; padding: 1.5rem; cursor: pointer; transition: border-color 400ms cubic-bezier(0.25,1,0.5,1), box-shadow 400ms cubic-bezier(0.25,1,0.5,1), transform 400ms cubic-bezier(0.25,1,0.5,1); box-shadow: 0 4px 12px rgba(0,0,0,0.05), inset 0 1px 1px rgba(255,255,255,0.8); overflow: hidden; font-family: Inter, -apple-system, sans-serif; } .ds-module-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #0071E3, #248A3D); opacity: 0; transition: opacity 400ms cubic-bezier(0.25,1,0.5,1); } .ds-module-card:hover { border-color: rgba(255,255,255,0.8); box-shadow: 0 12px 32px rgba(0,0,0,0.10), inset 0 1px 1px rgba(255,255,255,0.8); transform: translateY(-2px); } .ds-module-card:hover::before { opacity: 1; } .ds-module-icon { width: 44px; height: 44px; border-radius: 16px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; } .ds-icon-intro { background: rgba(0,113,227,0.12); color: #47A1FF; } .ds-module-title { font-family: Outfit, Inter, sans-serif; font-size: 0.95rem; font-weight: 700; color: #0F172A; margin: 0 0 0.4rem; } .ds-module-desc { font-size: 0.8rem; color: #334155; line-height: 1.5; margin: 0 0 1rem; } .ds-module-footer { display: flex; align-items: center; justify-content: space-between; } .ds-module-progress { flex: 1; margin-right: 1rem; } .ds-module-bar { height: 4px; background: rgba(100,116,139,0.15); border-radius: 100px; overflow: hidden; } .ds-module-fill { height: 100%; background: linear-gradient(90deg, #0071E3, #248A3D); border-radius: 100px; } .ds-module-pct { font-size: 0.65rem; color: #64748B; margin-top: 0.25rem; display: block; } .ds-status-badge { font-size: 0.65rem; font-weight: 700; padding: 3px 10px; border-radius: 100px; white-space: nowrap; text-transform: uppercase; letter-spacing: 0.08em; } .ds-status-progress { background: rgba(0,113,227,0.15); color: #47A1FF; }"
+    },
+    {
+      "name": "Nav Item (Active)",
+      "kind": "nav",
+      "refersTo": "nav-item-active",
+      "description": "Sidebar navigation item in its active/current-page state.",
+      "html": "<nav class=\"ds-sidebar-nav\"><a class=\"ds-nav-item\" href=\"#\"><svg class=\"ds-nav-icon\" width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"3\" y=\"3\" width=\"7\" height=\"7\"/><rect x=\"14\" y=\"3\" width=\"7\" height=\"7\"/><rect x=\"14\" y=\"14\" width=\"7\" height=\"7\"/><rect x=\"3\" y=\"14\" width=\"7\" height=\"7\"/></svg>Dashboard<span class=\"ds-nav-badge\">3 XP</span></a><a class=\"ds-nav-item ds-nav-active\" href=\"#\"><svg class=\"ds-nav-icon\" width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 19.5A2.5 2.5 0 016.5 17H20\"/><path d=\"M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z\"/></svg>Modulo corrente</a></nav>",
+      "css": ".ds-sidebar-nav { display: flex; flex-direction: column; gap: 2px; padding: 6px 0; font-family: Inter, -apple-system, sans-serif; } .ds-nav-item { display: flex; align-items: center; gap: 12px; padding: 10px 24px; color: #334155; font-size: 0.85rem; font-weight: 500; cursor: pointer; border-left: 3px solid transparent; text-decoration: none; transition: color 200ms cubic-bezier(0.25,1,0.5,1), background 200ms cubic-bezier(0.25,1,0.5,1), border-color 200ms cubic-bezier(0.25,1,0.5,1); } .ds-nav-item:hover { color: #0F172A; background: rgba(255,255,255,0.6); border-left-color: rgba(99,102,241,0.3); } .ds-nav-active { color: #47A1FF; background: rgba(99,102,241,0.08); border-left-color: #0071E3; font-weight: 600; } .ds-nav-icon { flex-shrink: 0; opacity: 0.7; } .ds-nav-active .ds-nav-icon, .ds-nav-item:hover .ds-nav-icon { opacity: 1; } .ds-nav-badge { margin-left: auto; font-size: 0.65rem; font-weight: 700; padding: 2px 8px; border-radius: 100px; background: rgba(0,113,227,0.15); color: #47A1FF; }"
+    },
+    {
+      "name": "Text Input",
+      "kind": "input",
+      "refersTo": "input-default",
+      "description": "Standard text field. Transparent background, border-defined.",
+      "html": "<div class=\"ds-field\"><label class=\"ds-label\" for=\"ds-input-1\">Username</label><div class=\"ds-input-wrap\"><input class=\"ds-input\" id=\"ds-input-1\" type=\"text\" placeholder=\"nome.cognome\" /></div></div>",
+      "css": ".ds-field { display: flex; flex-direction: column; gap: 6px; font-family: Inter, -apple-system, sans-serif; } .ds-label { font-size: 0.78rem; font-weight: 600; color: #334155; text-transform: uppercase; letter-spacing: 0.06em; } .ds-input-wrap { position: relative; } .ds-input { width: 100%; padding: 11px 16px; background: rgba(255,255,255,0.25); border: 1px solid rgba(255,255,255,0.5); border-radius: 16px; color: #0F172A; font-family: Inter, -apple-system, sans-serif; font-size: 0.9rem; outline: none; transition: border-color 200ms cubic-bezier(0.25,1,0.5,1), box-shadow 200ms cubic-bezier(0.25,1,0.5,1); } .ds-input::placeholder { color: #64748B; } .ds-input:focus { border-color: #0071E3; box-shadow: 0 0 0 3px rgba(0,113,227,0.25); } .ds-input:disabled { opacity: 0.6; cursor: not-allowed; }"
+    },
+    {
+      "name": "Quiz Option",
+      "kind": "custom",
+      "refersTo": "quiz-option-correct",
+      "description": "Full-border quiz answer choice showing all four states: default, selected, correct, wrong.",
+      "html": "<div class=\"ds-quiz-options\"><button class=\"ds-quiz-opt ds-opt-default\"><span class=\"ds-opt-letter\">A</span>Il GDPR si applica solo alle aziende private</button><button class=\"ds-quiz-opt ds-opt-selected\"><span class=\"ds-opt-letter\">B</span>Il GDPR si applica a tutti i soggetti che trattano dati personali</button><button class=\"ds-quiz-opt ds-opt-correct\"><span class=\"ds-opt-letter\">C</span>Il GDPR riguarda solo i dati sanitari<svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" style=\"margin-left:auto\"><polyline points=\"20 6 9 17 4 12\"/></svg></button><button class=\"ds-quiz-opt ds-opt-wrong\"><span class=\"ds-opt-letter\">D</span>Il GDPR vale solo in Italia</button></div>",
+      "css": ".ds-quiz-options { display: flex; flex-direction: column; gap: 10px; font-family: Inter, -apple-system, sans-serif; } .ds-quiz-opt { display: flex; align-items: center; gap: 12px; padding: 14px 19px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.5); background: transparent; color: #334155; font-size: 0.9rem; cursor: pointer; text-align: left; font-family: inherit; transition: border-color 200ms cubic-bezier(0.25,1,0.5,1), background 200ms cubic-bezier(0.25,1,0.5,1), color 200ms cubic-bezier(0.25,1,0.5,1); } .ds-quiz-opt:hover { border-color: #0071E3; background: rgba(99,102,241,0.05); color: #0F172A; } .ds-opt-selected { border-color: #0071E3; background: rgba(99,102,241,0.10); color: #47A1FF; } .ds-opt-correct { border-color: #248A3D; background: rgba(34,197,94,0.10); color: #155e25; } .ds-opt-wrong { border-color: #FF3B30; background: rgba(239,68,68,0.10); color: #FCA5A5; } .ds-opt-letter { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; border: 1px solid currentColor; flex-shrink: 0; }"
+    },
+    {
+      "name": "XP Progress Bar",
+      "kind": "custom",
+      "refersTo": "button-primary",
+      "description": "The gamification spine: XP level bar in the sidebar showing progress to next level.",
+      "html": "<div class=\"ds-xp-container\"><div class=\"ds-xp-label\"><span>Livello 2</span><span>340 / 500 XP</span></div><div class=\"ds-xp-track\"><div class=\"ds-xp-fill\" style=\"width: 68%\"></div></div></div>",
+      "css": ".ds-xp-container { padding: 12px 0; font-family: Inter, -apple-system, sans-serif; } .ds-xp-label { display: flex; justify-content: space-between; font-size: 0.7rem; color: #334155; margin-bottom: 6px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; } .ds-xp-track { height: 6px; background: rgba(100,116,139,0.20); border-radius: 100px; overflow: hidden; } .ds-xp-fill { height: 100%; background: linear-gradient(90deg, #0071E3, #248A3D); border-radius: 100px; box-shadow: 0 0 12px rgba(0,113,227,0.40); transition: width 600ms cubic-bezier(0.25,1,0.5,1); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "La Sala Formazione",
+    "overview": "This is a professional development room that has been digitised and given teeth. The physical analogy is precise: school staff enter the interface the way they enter a training session — with a professional register, aware that this counts for their record. The design honours that register. It is not a game. It uses game mechanics to serve a serious institutional goal. Every surface should feel like somewhere you can work, not somewhere you play.\n\nThe palette stays in translucent layered glass: not because glass looks sophisticated, but because it communicates that the interface has depth, that progress lives in layers, that learning accumulates beneath the surface. The glass is load-bearing, not decorative. Surfaces that do not need to communicate depth do not get glass treatment. The background mesh of radial gradients is the ambient layer the glass surfaces reveal through 40px of blur.\n\nThe tone rejects two failure modes by name. It is not a generic LMS: no Moodle-grey tables, no modal-first workflows. It is equally not a consumer product: no mascots, no unsolicited celebration animations, no casual copy. Professionale, chiaro, motivante is the exact constraint.",
+    "keyCharacteristics": [
+      "Translucent glass surfaces used structurally, not decoratively, above a four-colour ambient mesh",
+      "Two-tone accent system: Blu Formazione for actions and navigation, Verde Accreditamento exclusively for completion and validation",
+      "Dual theme: light is the office default, dark follows prefers-color-scheme",
+      "Gamification signals (XP bar, progress fills, status badges) always visible but never the loudest element on screen",
+      "Dense normative content served in slide-paged units with explicit navigation",
+      "Italian-language UI throughout; voice is knowledgeable colleague, not textbook"
+    ],
+    "rules": [
+      {
+        "name": "The Verde Solo Rule",
+        "body": "Verde Accreditamento appears exclusively in completion, validation, and success contexts. Never use it on buttons, decorative highlights, or informational elements. When it appears, it means something was earned.",
+        "section": "colors"
+      },
+      {
+        "name": "The Doppio Tema Rule",
+        "body": "Light mode is the office default; dark mode follows prefers-color-scheme. Every component must specify both themes. A component that only works in light mode is unfinished.",
+        "section": "colors"
+      },
+      {
+        "name": "The Mesh Dependency Rule",
+        "body": "Glass surfaces are meaningful only when the background mesh is rendered beneath them. In print, in iframe embeds, or in any context where the mesh is absent, glass cards must fall back to an opaque tinted background.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Outfit-Above-Title Rule",
+        "body": "Outfit is used only for display, headline, and title levels. All interactive elements — buttons, navigation items, inputs, labels, status badges — use Inter. Outfit in a button label is wrong.",
+        "section": "typography"
+      },
+      {
+        "name": "The Label Caps Rule",
+        "body": "Labels use uppercase + wide letter-spacing (0.08-0.12em) + maximum weight (700). This is how the system separates metadata from content. Lowercasing a label creates ambiguity.",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat-at-Rest Rule",
+        "body": "Shadows respond to state, not category. Non-interactive surfaces (stat values, breadcrumbs, progress text, section labels) carry no shadow at rest. Shadow on a static element implies interactivity.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do keep the XP bar, module completion badges, and progress fills visible at all times. These gamification signals are load-bearing motivators.",
+      "Do apply glass treatment only to container surfaces that sit directly above the background mesh: sidebar, top header, module cards, slide panels, dropdowns.",
+      "Do use Verde Accreditamento exclusively for success, completion, and validation states.",
+      "Do respect prefers-reduced-motion: all transitions collapse to 0.01ms when the preference is set.",
+      "Do cap content line length at the .content-area max-width (900px).",
+      "Do use uppercase + wide letter-spacing + Inter 700 for all label and metadata text.",
+      "Do use the top-accent strip (full-width 3px ::before gradient on hover) as the module card's active signal."
+    ],
+    "donts": [
+      "Don't apply glass surfaces to components that don't sit above the background mesh: inline alerts, empty-state messages, print output.",
+      "Don't add gradient text (-webkit-background-clip: text with a gradient) to any new component. The existing logo and stat-value instances are legacy.",
+      "Don't build identical card grids with undifferentiated icon-heading-text structure.",
+      "Don't use Outfit in labels, buttons, navigation items, form controls, or status badges.",
+      "Don't let any new screen resemble a generic LMS. Add learner-state context (progress, XP, completion) to any data view before shipping.",
+      "Don't let this feel like a consumer product. No mascots, no unsolicited confetti animations, no informal copy.",
+      "Don't use side-stripe colored borders (border-left or border-right greater than 1px as a visual accent) on new cards or callout boxes.",
+      "Don't use pure black (#000000) as a background in new dark-mode surfaces. Use #0A0A0F instead."
+    ]
+  }
+}

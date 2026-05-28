@@ -194,7 +194,7 @@ export default function AreaView() {
             <div className="skeleton skeleton-line" />
           </div>
         ) : totalSlides > 0 ? (
-          <div className={`slide-card slide-animate-${slideDirection}`} key={currentSlide}>
+          <div className={`slide-card${slideDirection ? ` slide-animate-${slideDirection}` : ''}`} key={currentSlide}>
             <div className="md-content">
               <ReactMarkdown remarkPlugins={[remarkGfm]}>{slides[currentSlide]}</ReactMarkdown>
             </div>

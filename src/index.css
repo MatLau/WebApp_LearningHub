@@ -1743,3 +1743,409 @@ h1, h2, h3, h4, h5, h6 {
   background: rgba(255, 59, 48, 0.08);
 }
 
+/* ==========================================================================
+   Admin Page
+   ========================================================================== */
+
+.admin-page {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding: 2rem;
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: var(--glass-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm), var(--glass-highlight);
+}
+
+.admin-header h1 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--color-text);
+  margin-bottom: 0.25rem;
+}
+
+.admin-header p {
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+}
+
+.admin-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.admin-table-container {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: var(--glass-border);
+  border-radius: var(--radius-lg);
+  overflow-x: auto;
+  box-shadow: var(--shadow-sm), var(--glass-highlight);
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.admin-table th, .admin-table td {
+  padding: 1rem 1.5rem;
+  text-align: left;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.admin-table th {
+  background: rgba(15, 23, 42, 0.4);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.5px;
+}
+
+.admin-table tbody tr:hover {
+  background: var(--color-surface-hover);
+}
+
+.progress-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.progress-cell span {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.mini-progress-bar {
+  height: 6px;
+  background: rgba(100, 116, 139, 0.15);
+  border-radius: 100px;
+  overflow: hidden;
+  width: 100%;
+  max-width: 120px;
+}
+
+.mini-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+  border-radius: 100px;
+}
+
+.xp-badge {
+  display: inline-block;
+  padding: 0.25rem 0.6rem;
+  background: rgba(245, 158, 11, 0.15);
+  color: var(--color-warning);
+  font-weight: 700;
+  font-size: 0.8rem;
+  border-radius: 100px;
+}
+
+.date-cell {
+  color: var(--color-text-secondary);
+  font-size: 0.85rem;
+}
+
+/* Modal form */
+.admin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+}
+
+/* ── Admin States ───────────────────────────────────────────────────────── */
+.admin-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 4rem 2rem;
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+}
+
+.admin-error {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  border-radius: var(--radius-md);
+  background: rgba(255, 59, 48, 0.08);
+  border: 1px solid rgba(255, 59, 48, 0.2);
+  color: var(--color-danger);
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+/* ── Button size variant ────────────────────────────────────────────────── */
+.btn-sm {
+  padding: 0.4rem 0.85rem;
+  font-size: 0.78rem;
+}
+
+/* ── Lucide icon spin ───────────────────────────────────────────────────── */
+.spin {
+  animation: spin 0.7s linear infinite;
+}
+
+/* ── Color utility classes ──────────────────────────────────────────────── */
+.text-primary { color: var(--color-primary-light); }
+.text-warning  { color: var(--color-warning); }
+.text-muted    { color: var(--color-text-muted); }
+
+/* ── Modal ──────────────────────────────────────────────────────────────── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  animation: fadeUp 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.modal-content {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: var(--glass-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg), var(--glass-highlight);
+  padding: 2rem;
+  animation: fadeUp 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.modal-content h2 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 0;
+}
+
+.modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(100, 116, 139, 0.12);
+  border: none;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+.modal-close:hover {
+  background: rgba(100, 116, 139, 0.24);
+  color: var(--color-text);
+}
+.modal-close:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* ── Form groups (modal) ────────────────────────────────────────────────── */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.form-group label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-text);
+  font-size: 0.9rem;
+  font-family: var(--font-primary);
+  outline: none;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.form-group input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-glow);
+}
+
+.form-group input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.form-error {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  border-radius: var(--radius-md);
+  background: rgba(255, 59, 48, 0.08);
+  border: 1px solid rgba(255, 59, 48, 0.2);
+  color: var(--color-danger);
+  font-size: 0.82rem;
+}
+
+/* ── AI copy button ─────────────────────────────────────────────────────── */
+.ai-copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-top: 0.5rem;
+  background: none;
+  border: none;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  font-size: 0.7rem;
+  font-family: var(--font-primary);
+  padding: 0;
+  transition: color var(--transition-fast);
+}
+
+.ai-copy-btn:hover {
+  color: var(--color-text-secondary);
+}
+
+/* ==========================================================================
+   Printable Certificate
+   ========================================================================== */
+
+.print-certificate {
+  display: none; /* Nascondi a schermo */
+}
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  
+  .print-certificate, .print-certificate * {
+    visibility: visible;
+  }
+  
+  .print-certificate {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    padding: 2cm;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: white;
+  }
+  
+  .cert-border {
+    border: 10px solid var(--color-primary);
+    padding: 10px;
+    width: 100%;
+    max-width: 29.7cm; /* A4 landscape approx */
+    height: 21cm;
+    background: #fff;
+    box-shadow: inset 0 0 0 2px var(--color-accent);
+  }
+  
+  .cert-content {
+    border: 2px solid var(--color-accent);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 3rem;
+    text-align: center;
+    color: #1e293b;
+    background-image: radial-gradient(circle at center, rgba(79, 70, 229, 0.03) 0%, transparent 70%);
+  }
+  
+  .cert-header {
+    margin-bottom: 2rem;
+  }
+  
+  .cert-header h1 {
+    font-size: 3rem;
+    color: var(--color-primary);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 1rem;
+    font-family: serif;
+  }
+  
+  .cert-icon {
+    color: var(--color-warning);
+    margin: 0 auto;
+  }
+  
+  .cert-body h2 {
+    font-size: 2.5rem;
+    margin: 1rem 0;
+    color: #0f172a;
+    font-style: italic;
+    border-bottom: 1px solid #cbd5e1;
+    display: inline-block;
+    padding-bottom: 0.5rem;
+    min-width: 50%;
+  }
+  
+  .cert-body h3 {
+    font-size: 1.5rem;
+    color: var(--color-primary);
+    margin: 1.5rem 0;
+  }
+  
+  .cert-stats {
+    font-size: 1.1rem;
+    color: #64748b;
+  }
+  
+  .cert-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 4rem;
+    padding: 0 2rem;
+  }
+  
+  .cert-footer .cert-line {
+    width: 200px;
+    border-bottom: 1px solid #000;
+    margin-bottom: 0.5rem;
+  }
+  
+  .cert-footer p {
+    font-size: 0.9rem;
+    color: #475569;
+  }
+}
+

@@ -27,8 +27,8 @@ export default function Dashboard() {
     <div className="content-area">
       {/* Welcome */}
       <section className="welcome-section">
-        <h1>
-          <Sparkles size={28} style={{ display: 'inline', verticalAlign: 'middle', marginRight: '0.5rem' }} />
+        <h1 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <Sparkles size={28} />
           Ciao, {displayName}!
         </h1>
         <p>

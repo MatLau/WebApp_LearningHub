@@ -66,7 +66,6 @@ export default function LoginPage() {
       // Se arriviamo qui senza errori, il login è ok — il componente smonterà
     } catch (err) {
       const code = err?.message || '';
-      console.error('[LoginPage] Auth error:', code, err);
 
       if (code === 'EMAIL_CONFIRMATION_REQUIRED') {
         setEmailConfirmPending(true);
@@ -151,11 +150,11 @@ export default function LoginPage() {
 
         {/* Heading */}
         <div className="login-heading">
-          <h1>
+          <h1 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
             {mode === 'login' ? (
-              <><LogIn size={22} style={{ verticalAlign: 'middle', marginRight: 8 }} />Accedi al corso</>
+              <><LogIn size={22} />Accedi al corso</>
             ) : (
-              <><Sparkles size={22} style={{ verticalAlign: 'middle', marginRight: 8 }} />Registrati</>
+              <><Sparkles size={22} />Registrati</>
             )}
           </h1>
           <p>
@@ -282,7 +281,7 @@ export default function LoginPage() {
             width: 7,
             height: 7,
             borderRadius: '50%',
-            background: CLOUD_ENABLED ? '#34C759' : '#FF3B30',
+            background: CLOUD_ENABLED ? 'var(--color-accent)' : 'var(--color-danger)',
             flexShrink: 0,
           }} />
           {CLOUD_ENABLED ? 'Supabase connesso' : 'Supabase non raggiunto — controlla .env'}

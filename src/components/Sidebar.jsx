@@ -2,10 +2,11 @@ import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useProgress } from '../context/ProgressContext';
 import { COURSE_AREAS } from '../data/courseData';
+import { useAuth } from '../context/AuthContext';
 import {
   BookOpen, Users, GraduationCap, FileText, Calculator,
   FolderKanban, Monitor, CalendarClock, FlaskConical,
-  Presentation, DoorOpen, Cpu,
+  Presentation, DoorOpen, Cpu, ShieldAlert,
   LayoutDashboard, BrainCircuit, Sparkles, X
 } from 'lucide-react';
 
@@ -16,6 +17,7 @@ const ICON_MAP = {
 };
 
 export default function Sidebar({ isOpen, onClose }) {
+  const { profile } = useAuth();
   const { totalXp, completedCount, isCompleted } = useProgress();
   const totalModules = COURSE_AREAS.reduce((s, a) => s + a.modules.length, 0);
   const xpPercent = Math.min((totalXp / (totalModules * 20)) * 100, 100);
@@ -105,6 +107,17 @@ export default function Sidebar({ isOpen, onClose }) {
             <FlaskConical size={20} className="nav-item-icon" />
             Playground AI
           </NavLink>
+
+          {/* Admin Area (Only visible to admins) */}
+          {profile?.is_admin && (
+            <>
+              <div className="nav-section-label" style={{ color: 'var(--color-warning)' }}>Amministrazione</div>
+              <NavLink to="/admin" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`} onClick={onClose}>
+                <ShieldAlert size={20} className="nav-item-icon text-warning" />
+                Gestione Utenti
+              </NavLink>
+            </>
+          )}
         </nav>
       </aside>
     </>

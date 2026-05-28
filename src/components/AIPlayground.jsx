@@ -4,7 +4,7 @@ import { FlaskConical, Send, Sparkles, Copy, Check } from 'lucide-react';
 
 export default function AIPlayground() {
   const [messages, setMessages] = useState([
-    { role: 'assistant', text: 'Ciao! Sono il tuo Tutor AI per la segreteria scolastica. Scrivi un prompt o seleziona un modello qui sotto per iniziare. 🎓' }
+    { role: 'assistant', text: 'Ciao! Sono il tuo Tutor AI per la segreteria scolastica. Scrivi un prompt o seleziona un modello qui sotto per iniziare.' }
   ]);
   const [input, setInput] = useState('');
   const [copied, setCopied] = useState(null);
@@ -62,8 +62,8 @@ export default function AIPlayground() {
   return (
     <div className="content-area">
       <div className="welcome-section">
-        <h1>
-          <FlaskConical size={28} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 8 }} />
+        <h1 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <FlaskConical size={28} />
           Playground AI
         </h1>
         <p>Testa i tuoi prompt in un ambiente simulato. Seleziona un modello o scrivi il tuo prompt personalizzato.</p>
@@ -101,11 +101,7 @@ export default function AIPlayground() {
               {msg.role === 'assistant' && i > 0 && (
                 <button
                   onClick={() => handleCopy(msg.text, i)}
-                  style={{
-                    display: 'block', marginTop: '0.5rem', background: 'none', border: 'none',
-                    color: 'var(--color-text-muted)', cursor: 'pointer', fontSize: '0.7rem',
-                    padding: 0, fontFamily: 'var(--font-primary)'
-                  }}
+                  className="ai-copy-btn"
                   aria-label="Copia risposta"
                 >
                   {copied === i ? <><Check size={12} /> Copiato!</> : <><Copy size={12} /> Copia</>}

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { QUIZZES, COURSE_AREAS } from '../data/courseData';
 import { useProgress } from '../context/ProgressContext';
-import { BrainCircuit, CheckCircle2, XCircle, RotateCcw, Trophy } from 'lucide-react';
+import { BrainCircuit, CheckCircle2, XCircle, RotateCcw, Trophy, ChevronRight } from 'lucide-react';
 
 export default function QuizPage() {
   const { addXp } = useProgress();
@@ -19,7 +19,7 @@ export default function QuizPage() {
     return (
       <div className="content-area">
         <div className="welcome-section">
-          <h1><BrainCircuit size={28} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 8 }} /> Quiz Interattivi</h1>
+          <h1 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}><BrainCircuit size={28} /> Quiz Interattivi</h1>
           <p>Metti alla prova le tue conoscenze! Ogni risposta corretta vale 5 XP.</p>
         </div>
 
@@ -114,11 +114,8 @@ export default function QuizPage() {
             {questions.map((_, i) => (
               <div
                 key={i}
-                style={{
-                  width: 8, height: 8, borderRadius: '50%',
-                  background: i < currentQ ? 'var(--color-accent)' : i === currentQ ? 'var(--color-primary)' : 'rgba(100,116,139,0.2)',
-                  transition: 'background 0.2s'
-                }}
+                className={`slide-dot${i === currentQ ? ' active' : i < currentQ ? ' visited' : ''}`}
+                style={{ cursor: 'default' }}
               />
             ))}
           </div>
@@ -157,7 +154,7 @@ export default function QuizPage() {
         {showResult && (
           <div style={{ textAlign: 'right' }}>
             <button className="btn btn-primary" onClick={handleNext}>
-              {currentQ < questions.length - 1 ? 'Prossima domanda' : 'Vedi risultati'} →
+              {currentQ < questions.length - 1 ? 'Prossima domanda' : 'Vedi risultati'} <ChevronRight size={16} />
             </button>
           </div>
         )}

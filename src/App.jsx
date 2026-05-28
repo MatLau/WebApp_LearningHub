@@ -9,6 +9,7 @@ import Dashboard from './components/Dashboard';
 import AreaView from './components/AreaView';
 import QuizPage from './components/QuizPage';
 import AIPlayground from './components/AIPlayground';
+import AdminPage from './components/AdminPage';
 import { Menu } from 'lucide-react';
 import './index.css';
 
@@ -49,6 +50,7 @@ function AppShell() {
               <Route path="/area/:areaId/:moduleId" element={<AreaView />} />
               <Route path="/quiz" element={<QuizPage />} />
               <Route path="/playground" element={<AIPlayground />} />
+              <Route path="/admin" element={<AdminPage />} />
               <Route path="*" element={
                 <div className="content-area">
                   <div className="glass-card" style={{ textAlign: 'center', padding: '4rem 2rem' }}>

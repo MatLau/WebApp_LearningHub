@@ -43,6 +43,7 @@ export default function Header({ onMenuToggle }) {
     }
     if (parts[0] === 'quiz') return [{ label: 'Strumenti' }, { label: 'Quiz Interattivi' }];
     if (parts[0] === 'playground') return [{ label: 'Strumenti' }, { label: 'Playground AI' }];
+    if (parts[0] === 'admin') return [{ label: 'Amministrazione' }];
     return [{ label: parts[parts.length - 1] }];
   };
 
@@ -55,7 +56,7 @@ export default function Header({ onMenuToggle }) {
           className="mobile-toggle"
           onClick={onMenuToggle}
           aria-label="Apri menu"
-          style={{ position: 'static', display: 'none' }}
+          style={{ position: 'static' }}
           id="mobile-menu-btn"
         >
           <Menu size={20} />
