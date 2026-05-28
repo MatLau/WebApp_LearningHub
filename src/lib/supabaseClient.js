@@ -1,55 +1,94 @@
-// Client Supabase per il progetto React.
-// Imposta VITE_SUPABASE_URL e VITE_SUPABASE_ANON_KEY in un file .env (vedi .env.example).
-// Se mancano, l'app può funzionare in modalità locale (senza cloud).
 import { createClient } from '@supabase/supabase-js'
 
-const url = import.meta.env.VITE_SUPABASE_URL
+const url  = import.meta.env.VITE_SUPABASE_URL
 const anon = import.meta.env.VITE_SUPABASE_ANON_KEY
 
 export const CLOUD_ENABLED = Boolean(url && anon)
 export const supabase = CLOUD_ENABLED ? createClient(url, anon) : null
 
-// Username -> email tecnica (Supabase Auth usa email+password)
+// Username → email tecnica (Supabase Auth usa email+password)
 const USERNAME_DOMAIN = import.meta.env.VITE_USERNAME_DOMAIN || 'learninghub.local'
 export const usernameToEmail = (u) =>
   String(u || '').trim().toLowerCase().replace(/[^a-z0-9._-]/g, '') + '@' + USERNAME_DOMAIN
 
-// Helper di autenticazione
+// ─── Autenticazione ─────────────────────────────────────────────────────────
+
 export async function register(username, password, fullName = '') {
   const email = usernameToEmail(username)
+
   const { data, error } = await supabase.auth.signUp({
-    email, password,
-    options: { data: { username: username.trim().toLowerCase(), full_name: fullName.trim() } },
+    email,
+    password,
+    options: {
+      data: {
+        username: username.trim().toLowerCase(),
+        full_name: fullName.trim(),
+      },
+    },
   })
+
   if (error) throw error
-  if (!data.session) {
-    const r = await supabase.auth.signInWithPassword({ email, password })
-    if (r.error) throw r.error
-    return r.data.session
+
+  // Supabase restituisce identities vuoto se l'utente esiste già (senza dare errore)
+  if (data.user?.identities?.length === 0) {
+    throw new Error('Username già registrato. Effettua il login.')
   }
-  return data.session
+
+  // Se la sessione è disponibile, tutto ok
+  if (data.session) return data.session
+
+  // Fallback: signUp a volte non ritorna sessione subito — proviamo signIn
+  const signIn = await supabase.auth.signInWithPassword({ email, password })
+  if (signIn.error) {
+    const msg = signIn.error.message || ''
+    if (msg.includes('Email not confirmed')) {
+      throw new Error('EMAIL_CONFIRMATION_REQUIRED')
+    }
+    throw signIn.error
+  }
+  return signIn.data.session
 }
 
 export async function login(username, password) {
   const { data, error } = await supabase.auth.signInWithPassword({
-    email: usernameToEmail(username), password,
+    email: usernameToEmail(username),
+    password,
   })
-  if (error) throw error
+
+  if (error) {
+    const msg = error.message || ''
+    if (msg.includes('Email not confirmed')) throw new Error('EMAIL_CONFIRMATION_REQUIRED')
+    if (msg.includes('Invalid login credentials')) throw new Error('INVALID_CREDENTIALS')
+    if (msg.includes('Too many requests') || msg.includes('rate limit')) throw new Error('RATE_LIMIT')
+    throw error
+  }
+
+  if (!data.session) throw new Error('Sessione non ricevuta da Supabase. Riprova.')
   return data.session
 }
 
 export async function logout() {
-  await supabase.auth.signOut()
+  if (supabase) await supabase.auth.signOut()
 }
 
-// Progressi
+// ─── Progressi ──────────────────────────────────────────────────────────────
+
 export async function loadProgress(userId) {
-  const { data } = await supabase.from('user_progress').select('state, xp').eq('user_id', userId).maybeSingle()
+  const { data, error } = await supabase
+    .from('user_progress')
+    .select('state, xp')
+    .eq('user_id', userId)
+    .maybeSingle()
+  if (error) console.warn('[Supabase] loadProgress error:', error.message)
   return data || null
 }
 
 export async function saveProgress(userId, state, xp) {
-  return supabase.from('user_progress').upsert({
-    user_id: userId, state, xp, updated_at: new Date().toISOString(),
+  const { error } = await supabase.from('user_progress').upsert({
+    user_id: userId,
+    state,
+    xp,
+    updated_at: new Date().toISOString(),
   })
+  if (error) console.warn('[Supabase] saveProgress error:', error.message)
 }

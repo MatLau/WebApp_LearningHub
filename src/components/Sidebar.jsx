@@ -16,7 +16,7 @@ const ICON_MAP = {
 };
 
 export default function Sidebar({ isOpen, onClose }) {
-  const { totalXp, completedCount } = useProgress();
+  const { totalXp, completedCount, isCompleted } = useProgress();
   const totalModules = COURSE_AREAS.reduce((s, a) => s + a.modules.length, 0);
   const xpPercent = Math.min((totalXp / (totalModules * 20)) * 100, 100);
   const location = useLocation();
@@ -73,9 +73,7 @@ export default function Sidebar({ isOpen, onClose }) {
 
           {COURSE_AREAS.map((area) => {
             const Icon = ICON_MAP[area.icon] || BookOpen;
-            const areaCompleted = area.modules.filter(m => {
-              try { return JSON.parse(localStorage.getItem('learninghub_progress') || '{}')[m.id]?.completed; } catch { return false; }
-            }).length;
+            const areaCompleted = area.modules.filter(m => isCompleted(m.id)).length;
             const isAreaActive = location.pathname.startsWith(`/area/${area.id}`);
 
             return (
