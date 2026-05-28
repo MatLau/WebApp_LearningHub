@@ -1,4 +1,4 @@
-# Learning Hub IA — Segreterie Scolastiche
+# Learning Hub IA — Innovazione digitale scolastica
 
 Percorso di formazione **interattivo e gamificato** sull'uso dell'Intelligenza
 Artificiale nel lavoro di segreteria scolastica (personale ATA e docenti),

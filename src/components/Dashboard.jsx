@@ -32,7 +32,7 @@ export default function Dashboard() {
           Ciao, {displayName}!
         </h1>
         <p>
-          Bentornato nel tuo percorso di formazione sull'Intelligenza Artificiale per le segreterie scolastiche.
+          Bentornato nel tuo percorso di formazione sull'innovazione digitale e IA nella scuola.
           Esplora i moduli, completa i quiz e guadagna XP.
         </p>
       </section>

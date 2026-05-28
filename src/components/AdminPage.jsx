@@ -349,7 +349,7 @@ export default function AdminPage() {
                 <p>Si certifica che</p>
                 <h2>{certificateUser.full_name || certificateUser.username}</h2>
                 <p>ha completato con successo il percorso formativo</p>
-                <h3>"Learning Hub IA: Formazione Segreterie Scolastiche"</h3>
+                <h3>"Learning Hub IA: Competenze digitali e IA per la scuola"</h3>
                 <p className="cert-stats">Completando tutti i {certificateUser.totalModules} moduli e ottenendo {certificateUser.xp} XP.</p>
               </div>
               <div className="cert-footer">
